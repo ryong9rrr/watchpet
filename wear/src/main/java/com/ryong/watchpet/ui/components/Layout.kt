@@ -6,20 +6,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.wear.compose.material.TimeText
 import com.ryong.watchpet.ui.theme.BlackAlpha900
 
 @Composable
-fun CenterBox(
-    children: @Composable () -> Unit, // 다른 jetpack compose 컴포넌트를 인자로 받음
-    backgroundColor: Color = BlackAlpha900 // backgroundColor는 optional이며 기본값을 BlackAlpha900으로 지정
+fun Layout(
+    children: @Composable () -> Unit,
+    hasClock: Boolean = false
 ){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = backgroundColor),
+            .background(color = BlackAlpha900),
         contentAlignment = Alignment.Center
     ) {
+        if (hasClock) {
+            TimeText()
+        }
+
         children()
     }
 }
