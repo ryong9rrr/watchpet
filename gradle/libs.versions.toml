@@ -52,4 +52,3 @@ androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watc
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
