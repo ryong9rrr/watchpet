@@ -66,11 +66,13 @@ dependencies {
     implementation(libs.horologist.tiles)
     implementation(libs.androidx.watchface.complications.data.source.ktx)
 
+    implementation("androidx.appcompat:appcompat:1.1.1")
     implementation("androidx.fragment:fragment-ktx:1.8.4")
     implementation("androidx.work:work-runtime:2.9.1")
 
     // Hilt dependency injection
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
+    implementation(libs.androidx.constraintlayout)
     kapt("com.google.dagger:hilt-android-compiler:${rootProject.extra["hiltVersion"]}")
     implementation("androidx.hilt:hilt-work:1.2.0")
     kapt("androidx.hilt:hilt-compiler:1.2.0")
