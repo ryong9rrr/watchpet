@@ -69,6 +69,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.1.1")
     implementation("androidx.fragment:fragment-ktx:1.8.4")
     implementation("androidx.work:work-runtime:2.9.1")
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
 
     // Hilt dependency injection
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
@@ -81,7 +82,7 @@ dependencies {
     implementation("androidx.wear:wear:1.3.0")
 
     // Health Services
-    implementation("androidx.health:health-services-client:1.0.0-rc02")
+    implementation("androidx.health:health-services-client:1.1.0-alpha03")
 
     // Used to bridge between Futures and coroutines
     implementation("com.google.guava:guava:33.3.1-android")
