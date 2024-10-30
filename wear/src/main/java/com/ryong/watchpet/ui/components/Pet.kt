@@ -14,9 +14,8 @@ import com.ryong.watchpet.ui.theme.WatchpetTheme
 import com.ryong.watchpet.viewmodels.PetViewModel
 
 @Composable
-fun Pet(
-    petViewModel: PetViewModel
-){
+fun Pet(){
+    val petViewModel = PetViewModel()
     val petUiState by petViewModel.uiState.collectAsState()
 
     Text(
@@ -30,12 +29,10 @@ fun Pet(
 @Preview(device = WearDevices.SMALL_ROUND, showSystemUi = true)
 @Composable
 private fun PetPreview(){
-    val petViewModel = PetViewModel()
-
     WatchpetTheme {
         Layout(
             children = {
-                Pet(petViewModel = petViewModel)
+                Pet()
             }
         )
     }
