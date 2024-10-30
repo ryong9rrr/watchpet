@@ -1,4 +1,4 @@
-package com.ryong.watchpet.ui.components
+package com.ryong.watchpet
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -10,11 +10,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.tooling.preview.devices.WearDevices
+import com.ryong.watchpet.ui.components.Layout
 import com.ryong.watchpet.ui.theme.WatchpetTheme
 import com.ryong.watchpet.viewmodels.PetViewModel
 
 @Composable
-fun Pet(){
+fun WatchPet(){
     val petViewModel = PetViewModel()
     val petUiState by petViewModel.uiState.collectAsState()
 
@@ -32,7 +33,7 @@ private fun PetPreview(){
     WatchpetTheme {
         Layout(
             children = {
-                Pet()
+                WatchPet()
             }
         )
     }
