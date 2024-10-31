@@ -1,7 +1,6 @@
 package com.ryong.watchpet
 
 import androidx.compose.runtime.Composable
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ryong.watchpet.services.HealthServicesRepository
 import com.ryong.watchpet.ui.components.Layout
 import com.ryong.watchpet.ui.screens.heartrate.HeartRateScreen
