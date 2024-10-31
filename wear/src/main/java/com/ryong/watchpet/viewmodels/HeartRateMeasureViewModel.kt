@@ -12,24 +12,24 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 
-class MeasureDataViewModel(
+class HeartRateMeasureViewModel(
     private val healthServicesRepository: HealthServicesRepository
-) : ViewModel() {
+): ViewModel() {
     val enabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val hr: MutableState<Double> = mutableStateOf(0.0)
     val availability: MutableState<DataTypeAvailability> =
         mutableStateOf(DataTypeAvailability.UNKNOWN)
 
-    val uiState: MutableState<UiState> = mutableStateOf(UiState.Startup)
+    val uiState: MutableState<HeartRateMeasureUiState> = mutableStateOf(HeartRateMeasureUiState.Startup)
 
     init {
         viewModelScope.launch {
             val supported = healthServicesRepository.hasHeartRateCapability()
             uiState.value = if (supported) {
-                UiState.Supported
+                HeartRateMeasureUiState.Supported
             } else {
-                UiState.NotSupported
+                HeartRateMeasureUiState.NotSupported
             }
         }
 
@@ -61,13 +61,13 @@ class MeasureDataViewModel(
     }
 }
 
-class MeasureDataViewModelFactory(
+class HeartRateMeasureViewModelFactory(
     private val healthServicesRepository: HealthServicesRepository
-) : ViewModelProvider.Factory {
+): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MeasureDataViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(HeartRateMeasureViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MeasureDataViewModel(
+            return HeartRateMeasureViewModel(
                 healthServicesRepository = healthServicesRepository
             ) as T
         }
@@ -75,8 +75,8 @@ class MeasureDataViewModelFactory(
     }
 }
 
-sealed class UiState {
-    object Startup : UiState()
-    object NotSupported : UiState()
-    object Supported : UiState()
+sealed class HeartRateMeasureUiState {
+    object Startup : HeartRateMeasureUiState()
+    object NotSupported : HeartRateMeasureUiState()
+    object Supported : HeartRateMeasureUiState()
 }

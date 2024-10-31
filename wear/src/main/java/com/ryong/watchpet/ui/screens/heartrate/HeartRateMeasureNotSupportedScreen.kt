@@ -1,4 +1,4 @@
-package com.ryong.watchpet.ui.screens
+package com.ryong.watchpet.ui.screens.heartrate
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
-import com.ryong.watchpet.ui.theme.WatchpetTheme
 import com.ryong.watchpet.R
+import com.ryong.watchpet.ui.theme.WatchpetTheme
 
 @Composable
-fun NotSupportedScreen() {
+fun HeartRateMeasureNotSupportedScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,8 +46,8 @@ fun NotSupportedScreen() {
     showSystemUi = true
 )
 @Composable
-fun NotSupportedScreenPreview() {
+private fun HeartRateMeasureNotSupportedScreenPreview() {
     WatchpetTheme {
-        NotSupportedScreen()
+        HeartRateMeasureNotSupportedScreen()
     }
 }

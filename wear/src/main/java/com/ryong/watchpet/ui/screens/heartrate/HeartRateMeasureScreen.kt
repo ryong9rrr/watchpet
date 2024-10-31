@@ -1,4 +1,4 @@
-package com.ryong.watchpet.ui.screens
+package com.ryong.watchpet.ui.screens.heartrate
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,19 +17,20 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
-import com.ryong.watchpet.ui.components.HrLabel
 import com.ryong.watchpet.R
+import com.ryong.watchpet.ui.components.HrLabel
 import com.ryong.watchpet.ui.theme.WatchpetTheme
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun MeasureDataScreen(
+fun HeartRateMeasureScreen(
     hr: Double,
     availability: DataTypeAvailability,
     enabled: Boolean,
     onButtonClick: () -> Unit,
     permissionState: PermissionState
-) {
+){
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -66,14 +67,14 @@ fun MeasureDataScreen(
     showSystemUi = true
 )
 @Composable
-fun MeasureDataScreenPreview() {
+private fun HeartRateMeasureScreenPreview() {
     val permissionState = object : PermissionState {
         override val permission = "android.permission.ACTIVITY_RECOGNITION"
         override val status: PermissionStatus = PermissionStatus.Granted
         override fun launchPermissionRequest() {}
     }
     WatchpetTheme {
-        MeasureDataScreen(
+        HeartRateMeasureScreen(
             hr = 65.0,
             availability = DataTypeAvailability.AVAILABLE,
             enabled = false,
