@@ -10,6 +10,7 @@ import androidx.wear.compose.material.Text
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
+import com.ryong.watchpet.services.HealthServicesRepository
 import com.ryong.watchpet.ui.components.Button
 import com.ryong.watchpet.ui.components.Flex
 import com.ryong.watchpet.ui.components.Layout
@@ -17,7 +18,9 @@ import com.ryong.watchpet.ui.theme.WatchpetTheme
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun WearApp() {
+fun WearApp(
+    healthServicesRepository: HealthServicesRepository
+) {
     val permissionState = rememberPermissionState(permission = android.Manifest.permission.BODY_SENSORS)
 
     WatchpetTheme {
@@ -25,7 +28,7 @@ fun WearApp() {
             children = {
                 when (permissionState.status) {
                     is PermissionStatus.Granted -> {
-                        WatchPet()
+                        MeasureDataApp(healthServicesRepository)
                     }
                     is PermissionStatus.Denied -> {
                         LaunchedEffect(Unit) {

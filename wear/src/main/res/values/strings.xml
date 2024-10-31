@@ -7,4 +7,10 @@
     <string name="hello_world">From the Square world,\nHello, %1$s!</string>
     <string name="tile_label">Example tile</string>
     <string name="complication_label">Example complication</string>
+
+    <string name="not_available">Not available on this device</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="icon">Icon</string>
+    <string name="no_hr_reading">--</string>
 </resources>

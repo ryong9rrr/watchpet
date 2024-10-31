@@ -1,7 +1,8 @@
-package com.ryong.watchpet
+package com.ryong.watchpet.services
 
 import android.content.Context
 import android.util.Log
+import androidx.concurrent.futures.await
 import androidx.health.services.client.HealthServices
 import androidx.health.services.client.MeasureCallback
 import androidx.health.services.client.data.Availability
@@ -10,36 +11,38 @@ import androidx.health.services.client.data.DataType
 import androidx.health.services.client.data.DataTypeAvailability
 import androidx.health.services.client.data.DeltaDataType
 import androidx.health.services.client.data.SampleDataPoint
-import androidx.health.services.client.getCapabilities
-import androidx.health.services.client.unregisterMeasureCallback
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.ryong.watchpet.TAG
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.runBlocking
 
-private const val TAG = "WATCHMAIN"
+/**
+ * Entry point for [HealthServicesClient] APIs. This also provides suspend functions around
+ * those APIs to enable use in coroutines.
+ */
+class HealthServicesRepository(context: Context) {
+    private val healthServicesClient = HealthServices.getClient(context)
+    private val measureClient = healthServicesClient.measureClient
 
-class HealthServicesManager(context: Context) {
-    private val measureClient = HealthServices.getClient(context).measureClient
-
-    suspend fun hasHeartRateCapability() = runCatching {
-        val capabilities = measureClient.getCapabilities()
-        (DataType.HEART_RATE_BPM in capabilities.supportedDataTypesMeasure)
-    }.getOrDefault(false)
+    suspend fun hasHeartRateCapability(): Boolean {
+        val capabilities = measureClient.getCapabilitiesAsync().await()
+        return (DataType.HEART_RATE_BPM in capabilities.supportedDataTypesMeasure)
+    }
 
     /**
      * Returns a cold flow. When activated, the flow will register a callback for heart rate data
-     * and start to emit messages. When the consuming coroutine is canceled, the measure callback
+     * and start to emit messages. When the consuming coroutine is cancelled, the measure callback
      * is unregistered.
      *
-     * [callbackFlow] creates a  bridge between a callback-based API and Kotlin flows.
+     * [callbackFlow] is used to bridge between a callback-based API and Kotlin flows.
      */
-    @ExperimentalCoroutinesApi
-    fun heartRateMeasureFlow(): Flow<MeasureMessage> = callbackFlow {
+    fun heartRateMeasureFlow() = callbackFlow {
         val callback = object : MeasureCallback {
-            override fun onAvailabilityChanged(dataType: DeltaDataType<*, *>, availability: Availability) {
+            override fun onAvailabilityChanged(
+                dataType: DeltaDataType<*, *>,
+                availability: Availability
+            ) {
                 // Only send back DataTypeAvailability (not LocationAvailability)
                 if (availability is DataTypeAvailability) {
                     trySendBlocking(MeasureMessage.MeasureAvailability(availability))
@@ -48,18 +51,18 @@ class HealthServicesManager(context: Context) {
 
             override fun onDataReceived(data: DataPointContainer) {
                 val heartRateBpm = data.getData(DataType.HEART_RATE_BPM)
-                Log.d(TAG, "💓 Received heart rate: ${heartRateBpm.first().value}")
                 trySendBlocking(MeasureMessage.MeasureData(heartRateBpm))
             }
         }
 
-        Log.d(TAG, "⌛ Registering for data...")
+        Log.d(TAG, "Registering for data")
         measureClient.registerMeasureCallback(DataType.HEART_RATE_BPM, callback)
 
         awaitClose {
-            Log.d(TAG, "👋 Unregistering for data")
+            Log.d(TAG, "Unregistering for data")
             runBlocking {
-                measureClient.unregisterMeasureCallback(DataType.HEART_RATE_BPM, callback)
+                measureClient.unregisterMeasureCallbackAsync(DataType.HEART_RATE_BPM, callback)
+                    .await()
             }
         }
     }

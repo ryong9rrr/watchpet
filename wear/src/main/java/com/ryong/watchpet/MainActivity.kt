@@ -18,10 +18,14 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
+        val healthServicesRepository = (application as MainApplication).healthServicesRepository
+
         setTheme(android.R.style.Theme_DeviceDefault)
 
         setContent {
-            WearApp()
+            WearApp(
+                healthServicesRepository = healthServicesRepository
+            )
         }
     }
 

@@ -66,10 +66,15 @@ dependencies {
     implementation(libs.horologist.tiles)
     implementation(libs.androidx.watchface.complications.data.source.ktx)
 
-    implementation("androidx.appcompat:appcompat:1.1.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.appcompat:appcompat-resources:1.7.0")
     implementation("androidx.fragment:fragment-ktx:1.8.4")
     implementation("androidx.work:work-runtime:2.9.1")
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+
+    // ui
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.material:material-icons-extended")
 
     // Hilt dependency injection
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hiltVersion"]}")
@@ -91,6 +96,7 @@ dependencies {
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.lifecycle:lifecycle-service:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
